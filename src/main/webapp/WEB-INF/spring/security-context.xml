@@ -11,6 +11,10 @@
   	<intercept-url pattern="/security/member" access="hasRole('ROLE_MEMBER')" />
   	<intercept-url pattern="/security/admin" access="hasRole('ROLE_ADMIN')" />
     <form-login />
+    
+    <!-- 403 에러처리 -->
+    <access-denied-handler error-page="/security/accessError"/>
+    
   </http>
 
   <!-- provider -->
