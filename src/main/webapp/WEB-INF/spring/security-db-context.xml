@@ -7,10 +7,11 @@
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <http>
-  	<intercept-url pattern="/security/all" access="permitAll" />
-  	<intercept-url pattern="/security/member" access="hasRole('ROLE_MEMBER')" />
-  	<intercept-url pattern="/security/admin" access="hasRole('ROLE_ADMIN')" />
-    <form-login />
+	<intercept-url pattern="/login/loginForm" access="permitAll" />
+    <intercept-url pattern="/" access="permitAll" />
+    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+    <intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')" />
+    <!-- <form-login /> -->
     
     <!-- 이건 디폴트. 기본 로그인 페이지. 그래서 이걸 자기걸로 커스터마이징 하기 -->
     <!-- 로그인 페이지 커스텀화 -->
@@ -23,17 +24,23 @@
     logout-success-url="/"/>
     
     <!-- 403 에러처리 -->
-    <access-denied-handler error-page="/security/accessError"/>
+    <access-denied-handler error-page="/login/accessDenied"/>
     
   </http>
+  
+  
+  <beans:bean id="customNoOpPasswordEncoder" class="edu.bit.ex.security.CustomNoOpPasswordEncoder"/>
 
   <!-- provider -->
   <authentication-manager>
 	<authentication-provider>
-		<user-service>
-			<user name="member" password="{noop}member" authorities="ROLE_MEMBER" />
-			<user name="admin" password="{noop}admin" authorities="ROLE_MEMBER,ROLE_ADMIN" />
-		</user-service>
+		<password-encoder ref="customNoOpPasswordEncoder" /> 
+		<!-- customNoOpPasswordEncoder는 암호화된 비번 그대로 bcryptPasswordEncoder는 암호화된 비번 복호화해서 -->
+		<jdbc-user-service 
+			data-source-ref="dataSource"
+			role-prefix=""
+			users-by-username-query="select username, password, enabled from users where username = ?"
+			authorities-by-username-query="select username, authority from authorities where username = ?" />
 	</authentication-provider>
   </authentication-manager>
 
