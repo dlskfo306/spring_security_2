@@ -17,7 +17,7 @@ public class CustomNoOpPasswordEncoder implements PasswordEncoder {
       return rawPassword.toString();
    }
 
-   //요청받은 패스워드가 인코딩된 패스워드와 일치하는지 확인하는 메서드
+   //요청받은 패스워드가 인코딩된 패스워드와 일치하는지 확인하는 메서드, 디코딩
    public boolean matches(CharSequence rawPassword, String encodedPassword) {
 
       log.warn("matches: " + rawPassword + ":" + encodedPassword);

@@ -23,6 +23,12 @@
 		destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 
+	<!-- Mapper Interface -->
+	<mybatis-spring:scan base-package="edu.bit.ex.mapper"/>
 
 </beans>

@@ -25,7 +25,7 @@
 </sec:authorize>
 
 <h3>
-<%--     [<a href="<c:url value="/user/userForm" />">회원가입</a>] --%>
+    [<a href="<c:url value="/user/userForm" />">회원가입</a>] 
     [<a href="<c:url value="/user/userHome" />">유저 홈</a>]
     [<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]
 <%--     [<a href="<c:url value="/restful/" />">게시판</a>] --%>
