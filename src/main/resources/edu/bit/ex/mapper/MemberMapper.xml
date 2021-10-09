@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.bit.ex.mapper.MemberMapper">
+
+	<resultMap id="memberMap" type="edu.bit.ex.vo.MemberVO">
+	    <result property="username" column="username"/>
+	    <result property="password" column="password"/>
+	    <result property="enabled" column="enabled"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap id="authMap" type="edu.bit.ex.vo.AuthVO">
+		<result property="username" column="username"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="getMember" resultMap="memberMap">
+		select * from users , authorities 
+		where users.username = authorities.username and users.username = #{username}
+	</select>
+	
+
+</mapper>
