@@ -28,6 +28,13 @@ public class MemberDetailsService implements UserDetailsService {
 
     //자손이 구현 이거 하나만 하면 된다. 
     //memberMapper 가져와서 userDetails로 리턴시켜야 한다.
+    
+    // loadUserByUsername()에서 하는 일
+    // 1. username을 가지고 사용자 정보를 조회
+    // 2. 사용자의 role과 권한을 조회하여 authorities에 세팅
+    // 3. Authentication 내부 principle 객체에 UserDetails 객체가 저장된다.
+    // 4. Authentication 내부 authorities 객체에 사용자의 Role과 권한 정보가 저장된다.
+    // 5. UserDetails에 authorities가 세팅되어 있어야, API별 role이나 권한 체크를 진행할 수 있다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.warn("Load User By MemberVO number: " + username);
